@@ -3,24 +3,28 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import img from "../../public/lab1.jpg";
-import img2 from "../../public/lab2.jpg";
-import img3 from "../../public/lab3.jpg";
-import img4 from "../../public/lab4.jpg";
+import img1 from "../assets/lab1.jpg";
+import img2 from "../assets/lab2.jpg";
+import img3 from "../assets/lab3.jpg";
+import img4 from "../assets/lab4.jpg";
 
-const images = [img, img2, img3, img4];
+const images = [img1, img2, img3, img4];
 
 const Gallery = () => {
     const settings = {
         dots: true,
         infinite: true,
         speed: 600,
-        slidesToShow: 3, // Desktop default
+        slidesToShow: 4, // Show 4 images on large screens
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
         arrows: true,
         responsive: [
+            {
+                breakpoint: 1280, // Large tablets / small desktops
+                settings: { slidesToShow: 3, slidesToScroll: 1, arrows: true },
+            },
             {
                 breakpoint: 1024, // Tablets
                 settings: { slidesToShow: 2, slidesToScroll: 1, arrows: true },
@@ -37,14 +41,17 @@ const Gallery = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-teal-700 mb-8">
                 Our Gallery
             </h2>
+
             <Slider {...settings}>
                 {images.map((src, i) => (
-                    <div key={i} className="px-2">
-                        <img
-                            src={src}
-                            alt={`Lab ${i + 1}`}
-                            className="rounded-lg shadow-md w-full h-64 md:h-72 lg:h-80 object-cover hover:scale-105 transition-transform duration-300"
-                        />
+                    <div key={i} className="px-3">
+                        <div className="overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src={src}
+                                alt={`Lab ${i + 1}`}
+                                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                        </div>
                     </div>
                 ))}
             </Slider>
