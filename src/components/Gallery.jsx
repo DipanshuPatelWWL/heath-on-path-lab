@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,22 +11,34 @@ import img4 from "../assets/lab4.jpg";
 const images = [img1, img2, img3, img4];
 
 const Gallery = () => {
+    const [isMobile, setIsMobile] = useState(window.matchMedia("(max-width: 640px)").matches);
+
+    // Detect screen size changes
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(max-width: 640px)");
+        const handleResize = (e) => setIsMobile(e.matches);
+
+        mediaQuery.addEventListener("change", handleResize);
+        return () => mediaQuery.removeEventListener("change", handleResize);
+    }, []);
+
+    // Slider settings based on screen size
     const settings = {
         dots: true,
         infinite: true,
         speed: 600,
-        slidesToShow: 4, // Show 4 images on large screens
+        slidesToShow: isMobile ? 1 : 3, // 1 for mobile, 3 for desktop
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
         arrows: true,
         responsive: [
             {
-                breakpoint: 1280, // Large tablets / small desktops
+                breakpoint: 1280, // Large desktop
                 settings: { slidesToShow: 3, slidesToScroll: 1, arrows: true },
             },
             {
-                breakpoint: 1024, // Tablets
+                breakpoint: 768, // Tablet
                 settings: { slidesToShow: 2, slidesToScroll: 1, arrows: true },
             },
             {
@@ -41,7 +53,6 @@ const Gallery = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-teal-700 mb-8">
                 Our Gallery
             </h2>
-
             <Slider {...settings}>
                 {images.map((src, i) => (
                     <div key={i} className="px-3">
