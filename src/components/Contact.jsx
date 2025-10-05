@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
-import API from "../API.jsx"; // Axios instance
+import API from "../api/API"; // Axios instance
 
 const Contact = () => {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
