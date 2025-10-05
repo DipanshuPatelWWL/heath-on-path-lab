@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
+import API from "../API.jsx"; // Axios instance
 
 const Contact = () => {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -16,26 +17,20 @@ const Contact = () => {
         setStatus("");
 
         try {
-            const res = await fetch("https://heath-on-back.onrender.com/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
+            const res = await API.post("/contact", formData);
+            const data = res.data;
 
-            const data = await res.json();
-
-            if (res.ok && data.success) {
+            if (data.success) {
                 setStatus("Message sent successfully!");
                 setFormData({ name: "", email: "", message: "" });
             } else {
-                setStatus("Failed to send message. Please try again.");
+                setStatus(data.message || "Failed to send message. Please try again.");
             }
         } catch (err) {
             console.error(err);
             setStatus("Something went wrong. Please try later.");
         } finally {
             setLoading(false);
-            // Auto-clear status after 5 seconds
             setTimeout(() => setStatus(""), 5000);
         }
     };
