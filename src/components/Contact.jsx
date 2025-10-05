@@ -3,7 +3,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import API from "../api/API"; // Axios instance
 
 const Contact = () => {
-    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+    const [formData, setFormData] = useState({ name: "", email: "", message: "", phone: "" });
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState("");
 
@@ -22,7 +22,7 @@ const Contact = () => {
 
             if (data.success) {
                 setStatus("Message sent successfully!");
-                setFormData({ name: "", email: "", message: "" });
+                setFormData({ name: "", email: "", message: "", phone: "" });
             } else {
                 setStatus(data.message || "Failed to send message. Please try again.");
             }
@@ -72,6 +72,15 @@ const Contact = () => {
                                 type="text"
                                 placeholder="Your Name"
                                 value={formData.name}
+                                onChange={handleChange}
+                                required
+                                className="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-teal-600"
+                            />
+                            <input
+                                name="phone"
+                                type="number"
+                                placeholder="Your Number"
+                                value={formData.phone}
                                 onChange={handleChange}
                                 required
                                 className="border border-gray-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-teal-600"

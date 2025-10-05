@@ -2,7 +2,8 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://heath-on-back.onrender.com/api", // backend base URL
+    baseURL: "https://heath-on-back.onrender.com/api",
+    // baseURL: "http://localhost:4000/api",
     headers: {
         "Content-Type": "application/json",
     },
