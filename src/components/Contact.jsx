@@ -25,14 +25,14 @@ const Contact = () => {
             const data = await res.json();
 
             if (res.ok && data.success) {
-                setStatus("✅ Message sent successfully!");
+                setStatus("Message sent successfully!");
                 setFormData({ name: "", email: "", message: "" });
             } else {
-                setStatus("⚠️ Failed to send message. Please try again.");
+                setStatus("Failed to send message. Please try again.");
             }
         } catch (err) {
             console.error(err);
-            setStatus("⚠️ Something went wrong. Please try later.");
+            setStatus("Something went wrong. Please try later.");
         } finally {
             setLoading(false);
             // Auto-clear status after 5 seconds
