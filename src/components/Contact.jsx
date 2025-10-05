@@ -21,19 +21,22 @@ const Contact = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
+
             const data = await res.json();
-            if (data.success) {
-                setStatus("Message sent successfully!");
+
+            if (res.ok && data.success) {
+                setStatus("✅ Message sent successfully!");
                 setFormData({ name: "", email: "", message: "" });
-                setTimeout(() => setStatus(""), 3000);
             } else {
-                setStatus("Failed to send message. Please try again.");
-                setTimeout(() => setStatus(""), 3000);
+                setStatus("⚠️ Failed to send message. Please try again.");
             }
-        } catch (error) {
-            setStatus("Something went wrong.");
+        } catch (err) {
+            console.error(err);
+            setStatus("⚠️ Something went wrong. Please try later.");
         } finally {
             setLoading(false);
+            // Auto-clear status after 5 seconds
+            setTimeout(() => setStatus(""), 5000);
         }
     };
 
@@ -115,11 +118,7 @@ const Contact = () => {
                             )}
                         </button>
 
-                        {status && (
-                            <p className="text-center text-teal-700 font-medium mt-4">
-                                {status}
-                            </p>
-                        )}
+                        {status && <p className="text-center text-teal-700 font-medium mt-4">{status}</p>}
                     </form>
                 </div>
             </div>
