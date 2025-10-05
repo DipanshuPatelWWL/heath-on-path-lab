@@ -21,7 +21,6 @@ const Contact = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
             const data = await res.json();
             if (data.success) {
                 setStatus("Message sent successfully!");
